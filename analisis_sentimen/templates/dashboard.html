@@ -1,0 +1,193 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<h1
+  id="name"
+  class="lg:text-2xl md:text-1xl text-xl block text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+>
+  {{ data_keyword|cut:"OR" }}
+</h1>
+<div class="grid md:grid-cols-3 grid-cols-1 gap-4">
+  {% for sentimen in sentiments %}
+  <!-- Start of component -->
+  <!-- Card Positif -->
+  <div
+    class="transform hover:scale-105 transition-transform delay-75 duration-500 md:max-w-sm bg-white border-2 p-6 rounded-md dark:bg-darker dark:border-blue-800 tracking-wide shadow-lg hover:shadow-xl"
+  >
+    <div
+      id="header"
+      class="flex justify-around items-center md:flex-col md:items-center lg:flex-row lg:justify-around"
+    >
+      <img
+        alt="avatar"
+        class="lg:w-28 w-24 rounded-full"
+        src="{% static 'images/positif.gif' %}"
+      />
+      <div id="header-text" class="leading-5 sm text-center">
+        <h4
+          id="name"
+          class="lg:text-3xl md:text-2xl text-xl block p-2 text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+        >
+          Positif
+        </h4>
+        <h5
+          id="job"
+          class="font-semibold block p-2 lg:text-xl text-lg text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+        >
+          {{ sentimen.positif }} Tweet
+        </h5>
+      </div>
+    </div>
+  </div>
+  <!-- End Card Positif -->
+
+  <!-- Card Netral -->
+  <div
+    class="transform hover:scale-105 transition-transform delay-75 duration-500 md:max-w-sm bg-white border-2 p-6 rounded-md dark:bg-darker dark:border-blue-800 tracking-wide shadow-lg hover:shadow-xl"
+  >
+    <div
+      id="header"
+      class="flex justify-around items-center md:flex-col md:items-center lg:flex-row lg:justify-around"
+    >
+      <img
+        alt="avatar"
+        class="lg:w-28 w-24 rounded-full"
+        src="{% static 'images/netral1.gif' %}"
+      />
+      <div id="header-text" class="leading-5 sm text-center">
+        <h4
+          id="name"
+          class="lg:text-3xl md:text-2xl text-xl block p-2 text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+        >
+          Netral
+        </h4>
+        <h5
+          id="job"
+          class="font-semibold block p-2 lg:text-xl text-lg text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+        >
+          {{ sentimen.netral }} Tweet
+        </h5>
+      </div>
+    </div>
+  </div>
+  <!-- End Card Netral -->
+
+  <!-- Card Negatif -->
+  <div
+    class="transform hover:scale-105 transition-transform delay-75 duration-500 md:max-w-sm bg-white border-2 p-6 rounded-md dark:bg-darker dark:border-blue-800 tracking-wide shadow-lg hover:shadow-xl"
+  >
+    <div
+      id="header"
+      class="flex justify-around items-center md:flex-col md:items-center lg:flex-row lg:justify-around"
+    >
+      <img
+        alt="avatar"
+        class="lg:w-28 w-24 rounded-full"
+        src="{% static 'images/negatif.gif' %}"
+      />
+      <div id="header-text" class="leading-5 sm text-center">
+        <h4
+          id="name"
+          class="lg:text-3xl md:text-2xl text-xl block p-2 text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+        >
+          Negatif
+        </h4>
+        <h5
+          id="job"
+          class="font-semibold block p-2 lg:text-xl text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+        >
+          {{ sentimen.negatif }} Tweet
+        </h5>
+      </div>
+    </div>
+  </div>
+  <!-- End Card Negatif -->
+  {% endfor %}
+</div>
+
+<div class="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-7">
+  <div class="w-full md:max-w-3xl space-y-3">
+    <h2 class="text-blue-600 text-xl font-bold dark:text-light">
+      Total Sentiment
+    </h2>
+    <canvas
+      id="myChart"
+      data-barchart="{% for sentimen in sentiments %}[{{ sentimen.positif }},{{ sentimen.netral }},{{ sentimen.negatif }}]{% endfor %}"
+    ></canvas>
+  </div>
+
+  <div class="w-full md:max-w-3xl space-y-3">
+    <h2 class="text-blue-600 text-xl font-bold dark:text-light">
+      Prosentase Sentiment
+    </h2>
+    <canvas
+      id="myDoughnutChart"
+      data-doughnutchart="{% for sentimen in sentiments %}[{{ sentimen.positif }},{{ sentimen.netral }},{{ sentimen.negatif }}]{% endfor %}"
+    ></canvas>
+  </div>
+
+  <div class="w-full md:max-w-3xl space-y-3">
+    <h2 class="text-blue-600 text-xl font-bold dark:text-light">
+      Total Sentiment Pertanggal
+    </h2>
+    <canvas id="myLineChart" data-linechart="{{ lptg }}"></canvas>
+  </div>
+
+  <div class="w-full md:max-w-3xl space-y-5">
+    <h2 class="text-blue-600 text-xl font-bold dark:text-light">List Tweet</h2>
+    <div class="overflow-auto h-72 space-y-5 py-7">
+      {% for tweet in tweets %}
+      <!-- Card Tweet -->
+      <div
+        class="transform hover:scale-100 xl:hover:scale-105 sm:hover:scale-105 transition-transform delay-75 duration-500 w-full mx-auto rounded-lg bg-white dark:bg-darker border-2 dark:border-blue-800 shadow hover:shadow-lg p-5 text-gray-800"
+        style="max-width: 400px"
+      >
+        <div class="w-full flex mb-4">
+          <div class="overflow-hidden rounded-full w-12 h-12">
+            {% if tweet.label == 'positif' %}
+            <img src="{% static 'images/positif.gif'%}" alt="" />
+            {% elif tweet.label == 'netral' %}
+            <img src="{% static 'images/netral1.gif'%}" alt="" />
+            {% else %}
+            <img src="{% static 'images/negatif.gif'%}" alt="" />
+            {% endif %}
+          </div>
+          <div class="flex-grow pl-3">
+            <h6
+              class="font-bold text-md text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+            >
+              {{ tweet.nama }}
+            </h6>
+            <p
+              class="text-xs text-gray-600 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+            >
+              {{ tweet.username }}
+            </p>
+          </div>
+          <div class="w-12 text-right">
+            <i class="mdi mdi-twitter text-blue-400 text-3xl"></i>
+          </div>
+        </div>
+        <div class="w-full mb-4">
+          <p
+            class="text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+          >
+            {{ tweet.tweet }}
+          </p>
+        </div>
+        <div class="w-full flex justify-between">
+          <p
+            class="text-xs font-bold text-gray-500 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+          >
+            Sentiment : {{ tweet.label|title }}
+          </p>
+          <p
+            class="text-xs text-gray-500 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700 text-right"
+          >
+            {{ tweet.tanggal|date:"j M Y" }}
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

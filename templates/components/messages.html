@@ -1,0 +1,11 @@
+{% if messages %}
+<div
+    id="message"
+    {% for message in messages %}
+    {% if message.tags %}
+    data-{{ message.tags }}="{{ message|safe }}"
+    data-type="{{ message.tags }}"
+    {% endif %}
+    {% endfor %}
+></div>
+{% endif %}

@@ -1,0 +1,61 @@
+:root {
+    --light: #edf2f9;
+    --dark: #152e4d;
+    --darker: #12263f;
+}
+
+.dark .dark\:text-light {
+    color: var(--light);
+}
+
+.dark .dark\:bg-dark {
+    background-color: var(--dark);
+}
+
+.dark .dark\:bg-darker {
+    background-color: var(--darker);
+}
+
+.dark .dark\:text-gray-300 {
+    color: #d1d5db;
+}
+
+.dark .dark\:text-indigo-500 {
+    color: #6366f1;
+}
+
+.dark .dark\:text-indigo-100 {
+    color: #e0e7ff;
+}
+
+.dark .dark\:hover\:text-light:hover {
+    color: var(--light);
+}
+
+.dark .dark\:border-indigo-800 {
+    border-color: #3730a3;
+}
+
+.dark .dark\:border-indigo-700 {
+    border-color: #4338ca;
+}
+
+.dark .dark\:bg-indigo-600 {
+    background-color: #4f46e5;
+}
+
+.dark .dark\:hover\:bg-indigo-600:hover {
+    background-color: #4f46e5;
+}
+
+.dark .dark\:border-indigo-500 {
+    border-color: #6366f1;
+}
+
+.hover\:overflow-y-auto:hover {
+    overflow-y: auto;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
